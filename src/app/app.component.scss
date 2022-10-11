@@ -1,0 +1,23 @@
+.marginBtn{
+    margin: 35px;
+}
+
+mat-toolbar {
+    background: #fff;
+}
+
+.spinner-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.1);
+    z-index:999;
+    text-align:center;
+    padding-top: 200px;
+    color: black;
+    mat-spinner {
+        margin: auto;
+    }
+}

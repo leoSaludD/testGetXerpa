@@ -1,0 +1,15 @@
+.page-container {
+    mat-card{
+        width:100px;
+    }
+    mat-card:hover {
+        background-color: #f2f2f2;
+        cursor: pointer;
+    }
+    app-goal-list {
+        width:100%;
+    }
+    
+    margin: auto;
+    width: 1000px;
+}

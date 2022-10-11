@@ -1,0 +1,57 @@
+<div class="main-container" fxLayoutAlign="center">
+    <mat-card>
+        <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon>add</mat-icon>
+            </div>
+            <mat-card-title *ngIf="!editing">Cear Meta</mat-card-title>
+            <mat-card-title *ngIf="editing">Editar Meta</mat-card-title>
+            <mat-card-subtitle>Ingrese los datos necesarios para crear su meta</mat-card-subtitle>
+        </mat-card-header>
+
+        <form [formGroup]="goalForm" (ngSubmit)="submitForm()">
+            <mat-card-content fxLayout="row" fxLayoutGap="10px">
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Tipo de Meta</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option *ngFor="let gt of goalTypes" [value]="gt">
+                            {{gt}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Fecha</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <span class="error-span" *ngIf="goalForm.controls['date'].errors">La fecha debe ser por <br/>  lo menos 30 dias despues de hoy</span>
+                </div>
+                
+                <div fxLayout="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Monto A Ahorrar</mat-label>
+                        <input matInput id="amount" name="amount" #amount type="number" min="1" formControlName="amount">
+                    </mat-form-field>
+                    <span class="error-span" *ngIf="goalForm.controls['amount'].errors">El monto a ahorrar debe ser mayor a 0</span>
+                </div>
+
+            </mat-card-content>
+
+            <mat-divider></mat-divider>
+
+            <app-rule-form [rules]="rules"></app-rule-form>
+            
+            <mat-divider></mat-divider>
+
+            <mat-card-actions fxLayoutAlign="end">
+                <button type="button" mat-button (click)="cancel()">Cancelar</button>
+                <button [disabled]="!goalForm.valid" type="submit" mat-button>Guardar</button>
+            </mat-card-actions>
+
+        </form>
+    </mat-card>
+</div>

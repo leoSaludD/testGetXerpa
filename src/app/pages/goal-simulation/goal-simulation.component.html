@@ -1,0 +1,57 @@
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex="1000px">
+        <div fxLayout="row" fxLayoutGap="20px">
+            <div>
+                <b>Tipo De Meta:</b> {{goal.type}}
+            </div>
+            <div>
+                <b>Fecha Limite:</b> {{goal.date | date}}
+            </div>
+            <div>
+                <b>Monto A Ahorrar: </b> {{goal.amount | currency}}
+            </div>
+            <div>
+                <b>Total Ahorrado: </b> {{goal.results | currency}}
+            </div>
+            <div>
+                <mat-icon *ngIf="goal.results >= goal.amount">check</mat-icon>
+                <mat-icon *ngIf="goal.results < goal.amount">clear</mat-icon>
+            </div>
+        </div>
+        
+        <br>
+    
+        <div>
+            <b class="rules-title">Reglas</b>
+        </div>
+        
+        <br>
+    
+        <table class="mat-table cdk-table">
+    
+            <thead>
+                <tr class="mat-header-row cdk-header-row">
+                    <th class="mat-header-cell cdk-header-cell">Equipo</th>
+                    <th class="mat-header-cell cdk-header-cell">Evento</th>
+                    <th class="mat-header-cell cdk-header-cell text-right">Monto</th>
+                    <th class="mat-header-cell cdk-header-cell text-right">Veces Activada</th>
+                    <th class="mat-header-cell cdk-header-cell text-right">Monto Ahorrado</th>
+                    <th class="mat-header-cell cdk-header-cell">Eventos Activados</th>
+                </tr>
+           </thead>
+           <tbody>
+                <tr *ngFor="let r of goal.rules" class="mat-row cdk-row">
+                    <td class="mat-cell cdk-cell">{{r.team}}</td>
+                    <td class="mat-cell cdk-cell">{{r.event}}</td>
+                    <td class="mat-cell cdk-cell text-right">{{r.amount | currency}}</td>
+                    <td class="mat-cell cdk-cell text-right">{{r.timesActivated}}</td>
+                    <td class="mat-cell cdk-cell text-right">{{r.savedAmount | currency}}</td>
+                    <td class="mat-cell cdk-cell events-row">
+                        <div class="event-description" *ngFor="let ed of r.eventDescriptions">{{ed}}</div>
+                    </td>
+                </tr>
+           </tbody>
+        </table>
+    
+    </mat-card>
+</div>

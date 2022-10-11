@@ -1,0 +1,22 @@
+<div class="main-container" fxLayout="column" fxLayoutGap="10px">
+    
+    
+    <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center">
+        
+
+        <div class="page-container">
+            <div fxLayout="column" fxLayoutGap="10px">
+                <div fxLayout="row" fxLayoutAlign="end">
+                    <mat-card [routerLink]="['/goal-form']">
+                        <mat-icon>add</mat-icon>
+                        Crear Meta
+                    </mat-card>
+                </div>
+                <div fxLayout="row" fxFlex="100%">
+                    <app-goal-list></app-goal-list>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
