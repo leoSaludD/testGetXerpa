@@ -102,7 +102,7 @@ export class SimulatorService {
         this.standingHash[match.awayTeam.name] = new TeamStanding(match.awayTeam.name);
       }
       let awayTeam: TeamStanding = this.standingHash[match.awayTeam.name] as TeamStanding;
-      debugger;
+      
       this.setPlayedGames(homeTeam, awayTeam, new Date(match.utcDate));
       this.setWonLost(match, homeTeam, awayTeam);
       this.setGoals(match, homeTeam, awayTeam);

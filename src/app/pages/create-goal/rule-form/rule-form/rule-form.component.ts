@@ -33,14 +33,21 @@ export class RuleFormComponent implements OnInit {
   ngOnInit(): void {
     if (this.simulationService.dataLoaded) {
       this.load();
-    } else { 
+    } else {
       this.simulationService.dataLoadedEvent.subscribe(() => {
         this.load();
       });
     }
   }
 
-  load() { 
+  deleteRule(rule: Rule) {
+    let newRules = this.rules.filter(r => {
+       return r.team != rule.team || r.event != rule.event;
+      });
+      this.refreshRuleTable(newRules);
+  }
+
+  load() {
     this.teams = this.simulationService.teams;
     this.refreshRuleTable(this.rules);
   }
@@ -52,21 +59,21 @@ export class RuleFormComponent implements OnInit {
 
   addRule(): void {
     let formValue = this.ruleForm.value;
-    if (!this.validateNewRule(formValue)) { 
+    if (!this.validateNewRule(formValue)) {
       return;
     }
-    
+
     this.rules.push(new Rule(formValue.team, formValue.event, formValue.amount));
     this.refreshRuleTable(this.rules);
   }
-  
-  validateNewRule(newRule: any) { 
-    if (this.rules.length >= 5) { 
+
+  validateNewRule(newRule: any) {
+    if (this.rules.length >= 5) {
       this.snackBarService.showSnackBar('No puedes agregar mas reglas');
       return false;
     }
 
-    if (this.rules.filter(r => r.team == newRule.team && r.event == newRule.event).length > 0) { 
+    if (this.rules.filter(r => r.team == newRule.team && r.event == newRule.event).length > 0) {
       this.snackBarService.showSnackBar('No puedes repetir reglas');
       return false;
     }
@@ -74,7 +81,7 @@ export class RuleFormComponent implements OnInit {
     return true;
   }
 
-  getRules(): Rule[] { 
+  getRules(): Rule[] {
     return this.rules;
   }
 
