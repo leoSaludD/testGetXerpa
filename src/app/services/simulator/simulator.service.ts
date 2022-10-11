@@ -53,7 +53,11 @@ export class SimulatorService {
           r.savedAmount += savedAmount;
           r.timesActivated += this.standingHash[r.team].goalsFor;
           let goalDescriptions = this.standingHash[r.team].eventDescriptions.filter(ed => ed.indexOf('anotar') >=0);
-          r.eventDescriptions = goalDescriptions.map(ed => `$${r.amount.toFixed(2)} ${ed}`);
+          r.eventDescriptions = goalDescriptions.map(ed => {
+            let split = ed.split("|");
+            let goals = parseInt(split[1]);
+            return `$${(r.amount * goals).toFixed(2)} ${split.join("")}`;
+          });
           break;
       }
 
@@ -133,11 +137,11 @@ export class SimulatorService {
   }
 
   private setGoals(match: Match, homeTeam: TeamStanding, awayTeam: TeamStanding) {
-    if(homeTeam.goalsFor > 0)
-      homeTeam.eventDescriptions.push(` ahorrado por anotar ${homeTeam.goalsFor} contra ${awayTeam.name} el día ${formatDate(new Date(match.utcDate), 'YYYY-MM-dd', 'en-ES')}`);
+    if(match.score.fullTime.home > 0)
+      homeTeam.eventDescriptions.push(` ahorrado por anotar |${match.score.fullTime.home}| contra ${awayTeam.name} el día ${formatDate(new Date(match.utcDate), 'YYYY-MM-dd', 'en-ES')}`);
     
-    if(awayTeam.goalsFor > 0)
-      awayTeam.eventDescriptions.push(` ahorrado por ganar contra ${homeTeam.name} el día ${formatDate(new Date(match.utcDate), 'YYYY-MM-dd', 'en-ES')}`);
+    if(match.score.fullTime.away > 0)
+      awayTeam.eventDescriptions.push(` ahorrado por anotar |${match.score.fullTime.away}| contra ${homeTeam.name} el día ${formatDate(new Date(match.utcDate), 'YYYY-MM-dd', 'en-ES')}`);
 
     homeTeam.goalsFor += match.score.fullTime.home;
     homeTeam.goalsAgainst += match.score.fullTime.away;
@@ -148,5 +152,5 @@ export class SimulatorService {
 }
 
 interface TableStanding {
-  [key: string]: TeamStanding;
+  [key: string]: TeamStanding;
 }
